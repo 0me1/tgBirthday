@@ -1,10 +1,10 @@
 from models.bot import bot
 from telebot.handler_backends import ContinueHandling
 
-@bot.message_handler(func=lambda _: True)
-def middleware(message): 
-    print(message.from_user.id, message.text)
-    return ContinueHandling()
+# @bot.message_handler(func=lambda _: True)
+# def middleware(message): 
+#     print(message.from_user.id, message.text)
+#     return ContinueHandling()
 
 from . import (
     start,
