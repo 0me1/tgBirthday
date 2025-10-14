@@ -17,4 +17,4 @@ from . import (
 
 def start_bot():
     print("Бот запущен...")
-    bot.polling(none_stop=True)
+    bot.infinity_polling()
