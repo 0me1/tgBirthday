@@ -56,17 +56,18 @@ def handle_default_state(message: Message):
         
         case 'За месяц':
             empty_flag = True
-            user.bdays.sort(key=lambda bd: bd.date.month)
+            user.bdays.sort(key=lambda bd: (bd.date.month, bd.date.day))
             target_month = datetime.now().month
-            text_to_send = f'\n<b>{calendar.month_name[target_month]}</b> 🗓\n'
+            text_to_send = f'\n<b>{calendar.month_name[target_month]}</b> 🗓\n<blockquote>'
             for bd in user.bdays:
                 if bd.date.month == target_month:
-                    text_to_send += f'<blockquote>{bd.name}: {bd.date.day} число</blockquote>' + '\n'
+                    text_to_send += f'<b>{bd.name}:</b> {bd.date.day} число' + '\n'
                     empty_flag = False
+            text_to_send += "</blockquote>"
 
 
             if empty_flag:
-                text_to_send += "Пусто...\n"
+                text_to_send += "Пусто... </blockquote>"
             
             return send(
                 user,
@@ -75,19 +76,20 @@ def handle_default_state(message: Message):
 
             
         case 'За весь год':
-            user.bdays.sort(key=lambda bd: bd.date.month)
+            user.bdays.sort(key=lambda bd: (bd.date.month, bd.date.day))
             text_to_send = ''
             last_saved_month = -1
 
             for bd in user.bdays:
                 if bd.date.month != last_saved_month:
-                    text_to_send += f'\n<b>{calendar.month_name[bd.date.month]} 🗓</b>\n'
+                    text_to_send += f'\n<b>{calendar.month_name[bd.date.month]} 🗓</b>\n<blockquote>'
                     last_saved_month = bd.date.month
-                text_to_send += f'<blockquote>{bd.name}: {bd.date.day} число</blockquote>' + '\n'
+                text_to_send += f'<b> {bd.name}:</b>  {bd.date.day} число' + '\n'
+            text_to_send += "</blockquote>"
 
             if len(user.bdays) < 1:
                 
-                text_to_send += "Пусто...\n"
+                text_to_send += "Пусто... </blockquote>"
 
             return send(
                 user, 
