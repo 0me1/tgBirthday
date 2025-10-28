@@ -82,10 +82,16 @@ def handle_default_state(message: Message):
 
             for bd in user.bdays:
                 if bd.date.month != last_saved_month:
-                    text_to_send += f'\n<b>{calendar.month_name[bd.date.month]} 🗓</b>\n<blockquote>'
-                    last_saved_month = bd.date.month
+                    if text_to_send == '':
+                        text_to_send += f'\n<b>{calendar.month_name[bd.date.month]} 🗓</b>\n<blockquote>'
+                        last_saved_month = bd.date.month
+                    elif text_to_send != '':
+                        text_to_send += "</blockquote>"
+                        text_to_send += f'\n<b>{calendar.month_name[bd.date.month]} 🗓</b>\n<blockquote>'
+                        last_saved_month = bd.date.month
                 text_to_send += f'<b> {bd.name}:</b>  {bd.date.day} число' + '\n'
             text_to_send += "</blockquote>"
+            
 
             if len(user.bdays) < 1:
                 
