@@ -5,7 +5,7 @@ from time import sleep
 
 
 def loop():
-    while datetime.now().hour != 7:
+    while datetime.now().hour != 4:
         sleep(1)
 
     while True:
